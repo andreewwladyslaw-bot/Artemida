@@ -1,0 +1,6 @@
+.protected-layout { min-height: 100vh; }
+.app-nav { display: flex; align-items: center; flex-wrap: wrap; gap: 18px; padding: 15px 26px; background: #172554; color: #fff; }
+.app-nav a { color: #dbeafe; text-decoration: none; }
+.app-nav a.active { color: #fff; font-weight: 700; text-decoration: underline; }
+.protected-content { min-width: 0; }
+.placeholder-page { padding: 30px; }
