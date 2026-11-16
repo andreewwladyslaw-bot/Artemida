@@ -1,9 +1,14 @@
-import { getLoginErrorMessage } from './loginErrors';
+
 import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { signIn } from './authService';
+import { getLoginErrorMessage } from './loginErrors';
 import './LoginPage.css';
 
 export default function LoginPage() {
+  const navigate = useNavigate();
+
   const [credentials, setCredentials] = useState({
     login: '',
     password: '',
@@ -11,7 +16,6 @@ export default function LoginPage() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [message, setMessage] = useState('');
 
   const inFlight = useRef(false);
 
@@ -37,15 +41,22 @@ export default function LoginPage() {
     inFlight.current = true;
     setIsLoading(true);
     setError('');
-    setMessage('');
 
     try {
-      await signIn({
+      const response = await signIn({
         login: credentials.login.trim(),
         password: credentials.password,
       });
 
-      setMessage('Login successful.');
+      if (typeof response?.mustChangePassword !== 'boolean') {
+        throw new Error('Invalid login response');
+      }
+
+      const destination = response.mustChangePassword
+        ? '/first-login'
+        : '/Dashboard';
+
+      navigate(destination, { replace: true });
     } catch (error) {
       setError(getLoginErrorMessage(error));
     } finally {
@@ -88,7 +99,6 @@ export default function LoginPage() {
         />
 
         {error && <p role="alert">{error}</p>}
-        {message && <p role="status">{message}</p>}
 
         <button type="submit" disabled={isLoading}>
           {isLoading ? 'Signing in...' : 'Sign in'}
