@@ -1,4 +1,4 @@
-
+import { getLoginErrorMessage } from './loginErrors';
 import { useRef, useState } from 'react';
 import { signIn } from './authService';
 import './LoginPage.css';
@@ -46,8 +46,8 @@ export default function LoginPage() {
       });
 
       setMessage('Login successful.');
-    } catch {
-      setError('Unable to sign in. Please try again.');
+    } catch (error) {
+      setError(getLoginErrorMessage(error));
     } finally {
       inFlight.current = false;
       setIsLoading(false);
