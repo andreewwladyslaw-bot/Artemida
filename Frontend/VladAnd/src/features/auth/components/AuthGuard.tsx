@@ -11,6 +11,10 @@ export function AuthGuard({ allowPasswordChange = false }: AuthGuardProps) {
   if (!user) return <Navigate to="/login" replace />;
   if (user.mustChangePassword && !allowPasswordChange) {
     return <Navigate to="/first-login" replace />;
+    
   }
+  if (allowPasswordChange && !user.mustChangePassword) {
+  return <Navigate to="/dashboard" replace />;
+}
   return <Outlet />;
 }
