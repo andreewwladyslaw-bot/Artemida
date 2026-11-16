@@ -84,6 +84,8 @@ it.each([
   [401, 'Invalid credentials or your session has expired.'],
   [429, 'Too many attempts. Please try again later.'],
   [500, 'Server error. Please try again later.'],
+  [403, 'Access denied.'],
+  [502, 'Server error. Please try again later.'],
 ])('shows a useful error for HTTP %i', async (status, message) => {
   mountAt('/login', mockLoginResponse(mockResponse({}, status)));
   await enterCredentials(); submitLogin();

@@ -68,3 +68,17 @@ it('shows a network error while changing the initial password', async () => {
   fireEvent.click(screen.getByRole('button', { name: 'Change password' }));
   expect(await screen.findByRole('alert')).toHaveProperty('textContent', 'Cannot connect to the server.');
 });
+it('redirects users without a password-change requirement away from first-login', async () => {
+  mountAt(
+    '/first-login',
+    vi.fn().mockResolvedValueOnce(
+      mockResponse({ user: ready })
+    )
+  );
+
+  expect(
+    await screen.findByRole('heading', {
+      name: 'EduPlatform Dashboard',
+    })
+  ).toBeTruthy();
+});
