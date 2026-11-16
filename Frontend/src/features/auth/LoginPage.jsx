@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { signIn } from './authService';
 import { getLoginErrorMessage } from './loginErrors';
 import './LoginPage.css';
+import { validateLogin } from './loginValidation';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -33,10 +34,12 @@ export default function LoginPage() {
 
     if (inFlight.current) return;
 
-    if (!credentials.login.trim() || !credentials.password.trim()) {
-      setError('Login and password are required.');
-      return;
-    }
+    const validationError = validateLogin(credentials);
+
+if (validationError) {
+  setError(validationError);
+  return;
+}
 
     inFlight.current = true;
     setIsLoading(true);
