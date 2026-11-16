@@ -1,9 +1,6 @@
 
+import LoginPage from '../features/auth/LoginPage';
 
-function App() {
-  return (      
-   <h1>s</h1> 
-  )
+export default function App() {
+  return <LoginPage />;
 }
-
-export default App
