@@ -44,7 +44,11 @@ export function LoginPage() {
       <section className="auth-card">
         <h1>Login</h1>
         <p>Sign in to EduPlatform</p>
-        <form onSubmit={handleSubmit} noValidate>
+        <form
+          onSubmit={handleSubmit}
+          noValidate
+          aria-busy={submitting}
+        >
           <label htmlFor="login">Login</label>
           <input
             id="login" name="login" type="text" placeholder="Enter your login"
