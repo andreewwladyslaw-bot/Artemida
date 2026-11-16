@@ -17,8 +17,12 @@ export function toAuthError(error: unknown): ApiError {
       error.status,
     );
   }
-  if (error.status >= 500) {
+  if (error.status >= 500 && error.status <= 599) {
     return new ApiError('Server error. Please try again later.', error.status);
   }
-  return new ApiError(messages[error.status] ?? error.message, error.status);
+  return new ApiError(
+  messages[error.status] ??
+    'Authentication failed. Please try again.',
+  error.status
+);
 }
